@@ -31,7 +31,9 @@ app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "troque-esta-chave-em-pr
 database_url = os.getenv("DATABASE_URL")
 print("DATABASE_URL RAW:", repr(database_url))
 
-database_url = database_url or "sqlite:///loja.db"
+if not database_url:
+    raise RuntimeError("DATABASE_URL nao encontrada no ambiente")
+
 if database_url.startswith("postgres://"):
     database_url = database_url.replace("postgres://", "postgresql://", 1)
 
@@ -44,6 +46,8 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 db = SQLAlchemy(app)
+with app.app_context():
+    db.create_all()
 
 
 class Setting(db.Model):
