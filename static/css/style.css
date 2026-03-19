@@ -1,22 +1,17 @@
 :root {
     --bg: #f8f4ee;
     --surface: #fffdf9;
-    --surface-soft: #f2e7db;
     --surface-soft-2: #fbf7f2;
-    --surface-green: #eef4eb;
     --text: #4e3a31;
     --muted: #7f6c60;
     --primary: #9a705b;
     --primary-dark: #7a5747;
-    --primary-soft: #ead9cc;
     --border: #e4d7cb;
-    --shadow: 0 18px 45px rgba(86, 58, 44, 0.08);
     --shadow-soft: 0 10px 25px rgba(86, 58, 44, 0.06);
     --radius: 22px;
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
 
 body {
     font-family: 'Inter', sans-serif;
@@ -24,18 +19,11 @@ body {
     color: var(--text);
 }
 
-h1, h2, h3, h4, h5, .navbar-brand {
+h1, h2, h3 {
     font-family: 'Cormorant Garamond', serif;
 }
 
 img { max-width: 100%; }
-
-/* ===== NAVBAR ===== */
-
-.site-navbar {
-    background: rgba(248, 244, 238, 0.94);
-    backdrop-filter: blur(12px);
-}
 
 /* ===== HERO ===== */
 
@@ -52,13 +40,19 @@ img { max-width: 100%; }
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center center;
+    object-position: center;
+    transform: scale(1);
+    transition: transform 6s ease;
+}
+
+.carousel-item.active .hero-image {
+    transform: scale(1.05);
 }
 
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(40, 27, 20, 0.68) 0%, rgba(40, 27, 20, 0.36) 46%, rgba(40, 27, 20, 0.15) 100%);
+    background: linear-gradient(90deg, rgba(40,27,20,0.65), rgba(40,27,20,0.2));
 }
 
 .hero-content {
@@ -68,67 +62,82 @@ img { max-width: 100%; }
     padding: 5rem 0;
 }
 
-/* ===== PRODUTOS (CORRIGIDO) ===== */
+/* ===== PRODUTOS ===== */
 
 .product-card {
     overflow: hidden;
     height: 100%;
     display: flex;
     flex-direction: column;
+    border-radius: var(--radius);
+    background: var(--surface);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
 }
 
 .product-image-link {
     display: block;
     width: 100%;
+    overflow: hidden;
 }
 
 .product-thumb-wrap {
-    position: relative;
-    background: var(--surface-soft-2);
     height: 280px;
     min-height: 280px;
     padding: 0.85rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: var(--surface-soft-2);
     overflow: hidden;
-    flex-shrink: 0;
 }
 
 .product-image {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    object-position: center;
-    border-radius: 14px;
+    transform: scale(1);
+    transition: transform 0.45s ease;
+}
+
+/* ZOOM ELEGANTE */
+.product-card:hover .product-image {
+    transform: scale(1.08);
 }
 
 .product-body {
-    padding: 1.3rem;
+    padding: 1.2rem;
     display: flex;
     flex-direction: column;
     flex: 1;
-    background: var(--surface);
-    position: relative;
-    z-index: 2;
 }
 
 .product-body h3 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
 }
 
 .product-text {
     color: var(--muted);
-    margin-bottom: 1rem;
-}
-
-.price-row {
-    margin-bottom: 1rem;
+    margin: 0.5rem 0 1rem;
 }
 
 .current-price {
     font-weight: bold;
     color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.btn-primary-custom {
+    background: var(--primary);
+    color: white;
+    border-radius: 999px;
+    padding: 0.8rem;
+    text-align: center;
+    text-decoration: none;
 }
 
 /* ===== WHATSAPP ===== */
@@ -141,12 +150,11 @@ img { max-width: 100%; }
     width: 58px;
     height: 58px;
     border-radius: 50%;
+    background: #25D366;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #25D366;
-    color: white;
-    font-size: 1.4rem;
 }
 
 /* ===== MOBILE ===== */
@@ -154,21 +162,12 @@ img { max-width: 100%; }
 @media (max-width: 767px) {
 
     .hero-banner {
-        min-height: 58vh;
+        min-height: 60vh;
         align-items: flex-end;
     }
 
     .hero-image {
-        object-position: 58% center;
-    }
-
-    .hero-overlay {
-        background: linear-gradient(
-            180deg,
-            rgba(40, 27, 20, 0.2) 0%,
-            rgba(40, 27, 20, 0.4) 60%,
-            rgba(40, 27, 20, 0.65) 100%
-        );
+        object-position: 60% center;
     }
 
     .product-thumb-wrap {
@@ -176,12 +175,13 @@ img { max-width: 100%; }
         min-height: 210px;
     }
 
-    .product-body {
-        padding: 1rem;
+    .product-card:hover {
+        transform: none;
+        box-shadow: none;
     }
 
-    .product-body h3 {
-        font-size: 1.5rem;
+    .product-card:hover .product-image {
+        transform: scale(1);
     }
 
     .whatsapp-float {
