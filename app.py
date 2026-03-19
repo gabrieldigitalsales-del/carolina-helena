@@ -222,15 +222,13 @@ def nl2br_filter(value):
 @app.context_processor
 def inject_globals():
     site = get_all_settings()
+    whatsapp_digits = re.sub(r"\D", "", site.get("whatsapp_number", ""))
     return {
         "site": site,
         "cart": load_cart_details(),
         "current_year": datetime.now().year,
-    whatsapp_digits = re.sub(r"\D", "", site.get("whatsapp_number", ""))
-context = {
-    # outros campos...
-    "store_whatsapp_link": f"https://wa.me/{whatsapp_digits}",
-}
+        "store_whatsapp_link": f"https://wa.me/{whatsapp_digits}",
+    }
 
 
 @app.cli.command("init-db")
