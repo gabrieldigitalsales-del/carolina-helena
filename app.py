@@ -226,8 +226,11 @@ def inject_globals():
         "site": site,
         "cart": load_cart_details(),
         "current_year": datetime.now().year,
-        "store_whatsapp_link": f"https://wa.me/{re.sub(r'\\D', '', site.get('whatsapp_number', ''))}",
-    }
+    whatsapp_digits = re.sub(r"\D", "", site.get("whatsapp_number", ""))
+context = {
+    # outros campos...
+    "store_whatsapp_link": f"https://wa.me/{whatsapp_digits}",
+}
 
 
 @app.cli.command("init-db")
@@ -1053,8 +1056,8 @@ def seed_data():
     db.session.add_all(products)
 
     banner = Banner(
-        title="Luxo atemporal para a sua marca",
-        subtitle="Lançamentos, vitrine elegante e um catálogo editável para você vender com mais autonomia.",
+        title="",
+        subtitle="",
         button_text="Ver coleção",
         button_link="/colecao",
         image="images/banner-default.svg",
