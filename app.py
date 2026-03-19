@@ -28,9 +28,14 @@ ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp", "svg"}
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "troque-esta-chave-em-producao")
 
-database_url = os.getenv("DATABASE_URL") or "sqlite:///loja.db"
+database_url = os.getenv("DATABASE_URL")
+print("DATABASE_URL RAW:", repr(database_url))
+
+database_url = database_url or "sqlite:///loja.db"
 if database_url.startswith("postgres://"):
     database_url = database_url.replace("postgres://", "postgresql://", 1)
+
+print("DATABASE_URL FINAL:", database_url)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = database_url
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
