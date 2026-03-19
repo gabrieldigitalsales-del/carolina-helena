@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}{{ site.store_name }} | Início{% endblock %}
+
 {% block content %}
 <section class="hero-section">
     {% if banners %}
@@ -8,27 +9,52 @@
             {% for banner in banners %}
             <div class="carousel-item {% if loop.first %}active{% endif %}">
                 <div class="hero-banner">
-                    <img src="{{ url_for('static', filename=banner.image) }}" alt="{{ banner.title }}" class="hero-image">
+                    <img
+                        src="{{ url_for('static', filename=banner.image) }}"
+                        alt="{{ banner.title }}"
+                        class="hero-image"
+                    >
                     <div class="hero-overlay"></div>
-                    <div class="container hero-content">
-                        <span class="section-kicker text-white">{{ site.hero_kicker }}</span>
-                        <h1>{{ banner.title }}</h1>
-                        <p>{{ banner.subtitle }}</p>
-                        <div class="d-flex gap-3 flex-wrap mb-4">
-                            <a href="{{ banner.button_link }}" class="btn btn-primary-custom">{{ banner.button_text }}</a>
-                            <a href="{{ url_for('about') }}" class="btn btn-soft-custom">Sobre nós</a>
+
+                    <div class="hero-content-wrap">
+                        <div class="container">
+                            <div class="hero-content">
+                                {% if site.hero_kicker %}
+                                <span class="section-kicker text-white">{{ site.hero_kicker }}</span>
+                                {% endif %}
+
+                                {% if banner.title %}
+                                <h1>{{ banner.title }}</h1>
+                                {% endif %}
+
+                                {% if banner.subtitle %}
+                                <p>{{ banner.subtitle }}</p>
+                                {% endif %}
+
+                                <div class="hero-buttons mb-4">
+                                    {% if banner.button_link and banner.button_text %}
+                                    <a href="{{ banner.button_link }}" class="btn btn-primary-custom">
+                                        {{ banner.button_text }}
+                                    </a>
+                                    {% endif %}
+
+                                    <a href="{{ url_for('about') }}" class="btn btn-soft-custom">
+                                        Sobre nós
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                     </div>
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
+
         {% if banners|length > 1 %}
-        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev" aria-label="Banner anterior">
             <span class="carousel-control-prev-icon"></span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next" aria-label="Próximo banner">
             <span class="carousel-control-next-icon"></span>
         </button>
         {% endif %}
@@ -46,6 +72,7 @@
                     <p>Layout claro em marrom suave e verde claro para destacar a marca sem pesar.</p>
                 </div>
             </div>
+
             <div class="col-md-4">
                 <div class="feature-card">
                     <span class="section-kicker">Admin</span>
@@ -53,6 +80,7 @@
                     <p>Produtos, categorias, banners, logo, textos e contatos editáveis no painel.</p>
                 </div>
             </div>
+
             <div class="col-md-4">
                 <div class="feature-card">
                     <span class="section-kicker">Vendas</span>
@@ -67,6 +95,7 @@
             <h2 class="section-title">{{ site.home_launches_title }}</h2>
             <p class="section-subtitle">{{ site.home_launches_subtitle }}</p>
         </div>
+
         <div class="row g-4 mt-4">
             {% for product in launches %}
             <div class="col-12 col-md-6 col-lg-3">
@@ -89,15 +118,21 @@
         <span class="section-kicker">Organize sua vitrine</span>
         <h2 class="section-title">{{ site.home_categories_title }}</h2>
         <p class="section-subtitle">{{ site.home_categories_subtitle }}</p>
+
         <div class="row g-4 mt-4">
             {% for category in categories %}
             <div class="col-6 col-lg-3">
                 <a href="{{ url_for('collection', categoria=category.slug) }}" class="category-card">
                     <div class="category-thumb">
-                        <img src="{{ url_for('static', filename=category.image or 'images/category-default.svg') }}" alt="{{ category.name }}">
+                        <img
+                            src="{{ url_for('static', filename=category.image or 'images/category-default.svg') }}"
+                            alt="{{ category.name }}"
+                        >
                     </div>
                     <h3>{{ category.name }}</h3>
-                    {% if category.description %}<p>{{ category.description }}</p>{% endif %}
+                    {% if category.description %}
+                    <p>{{ category.description }}</p>
+                    {% endif %}
                 </a>
             </div>
             {% else %}
@@ -117,6 +152,7 @@
         <span class="section-kicker">Favoritos</span>
         <h2 class="section-title">{{ site.home_best_sellers_title }}</h2>
         <p class="section-subtitle">{{ site.home_best_sellers_subtitle }}</p>
+
         <div class="row g-4 mt-4">
             {% for product in best_sellers %}
             <div class="col-12 col-md-6 col-lg-3">
