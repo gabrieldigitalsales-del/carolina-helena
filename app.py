@@ -22,11 +22,11 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-UPLOAD_FOLDER = os.path.join(BASE_DIR, "static", "uploads")
-ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp", "svg"}
+UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "/app/static/uploads")
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "troque-esta-chave-em-producao")
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 database_url = os.getenv("DATABASE_URL")
 print("DATABASE_URL RAW:", repr(database_url))
@@ -41,9 +41,8 @@ print("DATABASE_URL FINAL:", database_url)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = database_url
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
 db = SQLAlchemy(app)
 with app.app_context():
