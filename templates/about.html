@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}{{ site.store_name }} | Sobre{% endblock %}
+{% block content %}
+<section class="hero-mini">
+    <div class="container text-center py-5">
+        <span class="section-kicker">Sobre a marca</span>
+        <h1 class="page-title">{{ site.about_title }}</h1>
+    </div>
+</section>
+<section class="section-space-sm pt-0">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-5">
+                <img src="{{ url_for('static', filename=site.about_image or 'images/about-cover.svg') }}" alt="Sobre {{ site.store_name }}" class="about-image w-100">
+            </div>
+            <div class="col-lg-7">
+                <div class="about-text-card">
+                    <h2 class="section-title text-start mb-3">Texto editável pelo painel</h2>
+                    <p class="about-paragraph">{{ site.about_text }}</p>
+                    <div class="row g-3 mt-4">
+                        <div class="col-sm-4">
+                            <div class="info-chip">{{ site.about_highlight_1 }}</div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="info-chip">{{ site.about_highlight_2 }}</div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="info-chip">{{ site.about_highlight_3 }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

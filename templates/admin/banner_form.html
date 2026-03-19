@@ -1,0 +1,46 @@
+{% extends 'admin/base.html' %}
+{% block title %}{{ 'Editar' if banner else 'Novo' }} banner{% endblock %}
+{% block content %}
+<div class="mb-4">
+    <h1 class="h3 mb-1">{{ 'Editar' if banner else 'Novo' }} banner</h1>
+    <p class="text-muted mb-0">Qualquer imagem enviada ocupará toda a área do banner com ajuste automático via CSS.</p>
+</div>
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
+        <form method="post" enctype="multipart/form-data" class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label">Título</label>
+                <input class="form-control" name="title" value="{{ banner.title if banner else '' }}" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Subtítulo</label>
+                <input class="form-control" name="subtitle" value="{{ banner.subtitle if banner else '' }}">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Texto do botão</label>
+                <input class="form-control" name="button_text" value="{{ banner.button_text if banner else 'Ver coleção' }}">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Link do botão</label>
+                <input class="form-control" name="button_link" value="{{ banner.button_link if banner else '/colecao' }}">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Ordem</label>
+                <input type="number" class="form-control" name="sort_order" value="{{ banner.sort_order if banner else 0 }}">
+            </div>
+            <div class="col-12">
+                <label class="form-label">Imagem do banner</label>
+                <input type="file" class="form-control" name="image" accept=".png,.jpg,.jpeg,.webp,.svg">
+            </div>
+            <div class="col-12 form-check ms-2">
+                <input class="form-check-input" type="checkbox" name="is_active" id="banner_active" {% if not banner or banner.is_active %}checked{% endif %}>
+                <label class="form-check-label" for="banner_active">Banner ativo</label>
+            </div>
+            <div class="col-12 d-flex justify-content-end gap-2">
+                <a href="{{ url_for('admin_banners') }}" class="btn btn-outline-dark">Cancelar</a>
+                <button class="btn btn-primary-custom">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'admin/base.html' %}
+{% block title %}Banners | {{ site.store_name }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+        <h1 class="h3 mb-1">Banners</h1>
+        <p class="text-muted mb-0">Gerencie o banner principal da vitrine.</p>
+    </div>
+    <a href="{{ url_for('admin_banner_new') }}" class="btn btn-primary-custom">Novo banner</a>
+</div>
+<div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+        <table class="table align-middle mb-0">
+            <thead><tr><th>Imagem</th><th>Título</th><th>Ordem</th><th>Status</th><th class="text-end">Ações</th></tr></thead>
+            <tbody>
+                {% for banner in banners %}
+                <tr>
+                    <td><img src="{{ url_for('static', filename=banner.image or 'images/banner-default.svg') }}" class="thumb-banner"></td>
+                    <td>{{ banner.title }}</td>
+                    <td>{{ banner.sort_order }}</td>
+                    <td>{{ 'Ativo' if banner.is_active else 'Inativo' }}</td>
+                    <td class="text-end">
+                        <a href="{{ url_for('admin_banner_edit', banner_id=banner.id) }}" class="btn btn-sm btn-outline-dark">Editar</a>
+                        <form method="post" action="{{ url_for('admin_banner_delete', banner_id=banner.id) }}" class="d-inline">
+                            <button class="btn btn-sm btn-outline-danger" onclick="return confirm('Excluir banner?')">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="5" class="p-4 text-muted">Nenhum banner cadastrado.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends 'admin/base.html' %}
+{% block title %}{{ 'Editar' if product else 'Novo' }} produto{% endblock %}
+{% block content %}
+<div class="mb-4">
+    <h1 class="h3 mb-1">{{ 'Editar' if product else 'Novo' }} produto</h1>
+</div>
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
+        <form method="post" enctype="multipart/form-data" class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label">Nome</label>
+                <input class="form-control" name="name" value="{{ product.name if product else '' }}" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Categoria</label>
+                <select class="form-select" name="category_id" required>
+                    <option value="">Selecione</option>
+                    {% for category in categories %}
+                    <option value="{{ category.id }}" {% if product and product.category_id == category.id %}selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Preço</label>
+                <input type="number" step="0.01" class="form-control" name="price" value="{{ product.price if product else '' }}">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Preço anterior</label>
+                <input type="number" step="0.01" class="form-control" name="compare_at_price" value="{{ product.compare_at_price if product else '' }}">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Estoque</label>
+                <input type="number" class="form-control" name="stock" value="{{ product.stock if product else 0 }}">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Variação de tamanhos</label>
+                <select class="form-select" name="size_mode" id="size_mode">
+                    <option value="none" {% if not product or not product.size_mode or product.size_mode == 'none' %}selected{% endif %}>Sem tamanho</option>
+                    <option value="ring" {% if product and product.size_mode == 'ring' %}selected{% endif %}>Anel (numeração)</option>
+                    <option value="clothing" {% if product and product.size_mode == 'clothing' %}selected{% endif %}>Roupa (P, M, G, GG)</option>
+                    <option value="custom" {% if product and product.size_mode == 'custom' %}selected{% endif %}>Lista personalizada</option>
+                </select>
+                <div class="form-text">Para roupas, o site já usa P, M, G e GG.</div>
+            </div>
+            <div class="col-md-6" id="custom_sizes_wrap">
+                <label class="form-label">Tamanhos personalizados</label>
+                <input class="form-control" name="custom_sizes" id="custom_sizes" value="{{ product.size_options if product and product.size_mode == 'custom' else '' }}" placeholder="Ex.: 12, 14, 16 ou Único, Ajustável">
+                <div class="form-text">Separe os tamanhos por vírgula.</div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Imagem</label>
+                <input type="file" class="form-control" name="image" accept=".png,.jpg,.jpeg,.webp,.svg">
+            </div>
+            <div class="col-12">
+                <label class="form-label">Resumo</label>
+                <input class="form-control" name="short_description" value="{{ product.short_description if product else '' }}">
+            </div>
+            <div class="col-12">
+                <label class="form-label">Descrição completa</label>
+                <textarea class="form-control" rows="5" name="description">{{ product.description if product else '' }}</textarea>
+            </div>
+            <div class="col-12 d-flex flex-wrap gap-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="is_active" id="prod_active" {% if not product or product.is_active %}checked{% endif %}>
+                    <label class="form-check-label" for="prod_active">Produto ativo</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="is_new" id="prod_new" {% if product and product.is_new %}checked{% endif %}>
+                    <label class="form-check-label" for="prod_new">Marcar como lançamento</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="is_best_seller" id="prod_best" {% if product and product.is_best_seller %}checked{% endif %}>
+                    <label class="form-check-label" for="prod_best">Marcar como mais vendido</label>
+                </div>
+            </div>
+            <div class="col-12 d-flex justify-content-end gap-2">
+                <a href="{{ url_for('admin_products') }}" class="btn btn-outline-dark">Cancelar</a>
+                <button class="btn btn-primary-custom">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+(function () {
+    const mode = document.getElementById('size_mode');
+    const wrap = document.getElementById('custom_sizes_wrap');
+    const input = document.getElementById('custom_sizes');
+    function refreshSizeMode() {
+        const value = mode ? mode.value : 'none';
+        if (!wrap) return;
+        const custom = value === 'custom';
+        wrap.style.display = custom ? 'block' : 'none';
+        if (input) input.required = custom;
+    }
+    if (mode) {
+        mode.addEventListener('change', refreshSizeMode);
+        refreshSizeMode();
+    }
+})();
+</script>
+{% endblock %}

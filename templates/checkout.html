@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}Checkout | {{ site.store_name }}{% endblock %}
+{% block content %}
+<section class="section-space-sm">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-7">
+                <span class="section-kicker">Checkout</span>
+                <h1 class="page-title">Finalize pelo WhatsApp</h1>
+                <form method="post" class="checkout-form card p-4 mt-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Nome *</label>
+                            <input class="form-control" name="customer_name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">WhatsApp *</label>
+                            <input class="form-control" name="whatsapp" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">CEP</label>
+                            <input class="form-control" name="cep">
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label">Rua *</label>
+                            <input class="form-control" name="street" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Número *</label>
+                            <input class="form-control" name="number" required>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label">Bairro *</label>
+                            <input class="form-control" name="neighborhood" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Complemento</label>
+                            <input class="form-control" name="complement">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Cidade *</label>
+                            <input class="form-control" name="city" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Estado *</label>
+                            <input class="form-control" name="state" required>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Meio de pagamento *</label>
+                            <select class="form-select" name="payment_method" required>
+                                <option value="">Selecione</option>
+                                <option>Cartão de crédito</option>
+                                <option>Cartão de débito</option>
+                                <option>Dinheiro</option>
+                                <option>Pix</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary-custom mt-4">Finalizar e enviar para o WhatsApp</button>
+                </form>
+            </div>
+            <div class="col-lg-5">
+                <div class="summary-card sticky-summary">
+                    <h2 class="h4 mb-4">Resumo do pedido</h2>
+                    {% for item in cart['items'] %}
+                    <div class="d-flex justify-content-between align-items-start mb-3 gap-3">
+                        <div>
+                            <div class="fw-semibold">{{ item.product.name }}</div>
+                            <div class="small text-muted">Qtd: {{ item.quantity }}</div>
+                            {% if item.size %}<div class="small text-muted">Tamanho: {{ item.size }}</div>{% endif %}
+                        </div>
+                        <div>{{ item.subtotal|currency }}</div>
+                    </div>
+                    {% endfor %}
+                    <hr>
+                    <div class="d-flex justify-content-between fw-bold">
+                        <span>Total</span>
+                        <span>{{ cart['subtotal']|currency }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

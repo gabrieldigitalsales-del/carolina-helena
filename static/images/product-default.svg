@@ -1,0 +1,5 @@
+<svg width="1000" height="1200" viewBox="0 0 1000 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1000" height="1200" fill="#EFE5DC"/>
+  <rect x="180" y="240" width="640" height="720" rx="40" fill="#FBF7F3" stroke="#B9957D" stroke-width="12"/>
+  <text x="280" y="630" fill="#8B5E4A" font-family="Georgia, serif" font-size="92">Produto</text>
+</svg>

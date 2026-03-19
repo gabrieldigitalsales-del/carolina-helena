@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}{{ site.store_name }} | Contato{% endblock %}
+{% block content %}
+<section class="section-space-sm">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="section-kicker">Contato</span>
+            <h1 class="page-title">Entre em contato</h1>
+            <p class="section-subtitle">{{ site.contact_intro }}</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-5">
+                <div class="contact-card h-100">
+                    <h2 class="h3 mb-4">Fale com a loja</h2>
+
+                    <div class="contact-item">
+                        <div class="contact-grid-icon"><i class="bi bi-whatsapp"></i></div>
+                        <div>
+                            <div class="fw-semibold">WhatsApp</div>
+                            <a href="{{ store_whatsapp_link }}" target="_blank" rel="noopener">Atendimento direto</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-grid-icon"><i class="bi bi-instagram"></i></div>
+                        <div>
+                            <div class="fw-semibold">Instagram</div>
+                            <a href="{{ site.instagram_url }}" target="_blank" rel="noopener">Abrir perfil</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-grid-icon"><i class="bi bi-geo-alt"></i></div>
+                        <div>
+                            <div class="fw-semibold">Endereço</div>
+                            <div class="text-muted">{{ site.address_line }}</div>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-grid-icon"><i class="bi bi-clock"></i></div>
+                        <div>
+                            <div class="fw-semibold">Horário de atendimento</div>
+                            <div class="text-muted">{{ site.contact_hours|nl2br|safe }}</div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-3 mt-4">
+                        <a class="btn btn-primary-custom" href="{{ store_whatsapp_link }}" target="_blank" rel="noopener">
+                            <i class="bi bi-whatsapp me-2"></i> Chamar no WhatsApp
+                        </a>
+                        <a class="btn btn-outline-dark" href="{{ site.instagram_url }}" target="_blank" rel="noopener">
+                            <i class="bi bi-instagram me-2"></i> Ir para o Instagram
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="map-frame-wrap">
+                    <iframe src="{{ site.map_embed_url }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

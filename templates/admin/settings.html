@@ -1,0 +1,128 @@
+{% extends 'admin/base.html' %}
+{% block title %}Configurações | {{ site.store_name }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+        <h1 class="h3 mb-1">Configurações gerais</h1>
+        <p class="text-muted mb-0">Edite textos, contatos, horários, mapa, logo e conteúdo da home.</p>
+    </div>
+</div>
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
+        <form method="post" enctype="multipart/form-data" class="row g-4">
+            <div class="col-12">
+                <h2 class="h5 mb-0">Identidade da marca</h2>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Nome da loja</label>
+                <input class="form-control" name="store_name" value="{{ site.store_name }}">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Slogan</label>
+                <input class="form-control" name="store_tagline" value="{{ site.store_tagline }}">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Logo da marca</label>
+                <input type="file" class="form-control" name="logo_image" accept=".png,.jpg,.jpeg,.webp,.svg">
+                <div class="form-text">A logo pode ser trocada a qualquer momento.</div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Imagem da página Sobre</label>
+                <input type="file" class="form-control" name="about_image" accept=".png,.jpg,.jpeg,.webp,.svg">
+                <div class="form-text">Essa imagem aparece ao lado do texto Sobre.</div>
+            </div>
+
+            <div class="col-12"><hr class="my-0"></div>
+            <div class="col-12">
+                <h2 class="h5 mb-0">Contato da loja</h2>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">WhatsApp da loja</label>
+                <input class="form-control" name="whatsapp_number" value="{{ site.whatsapp_number }}">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Link do Instagram</label>
+                <input class="form-control" name="instagram_url" value="{{ site.instagram_url }}">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Endereço resumido</label>
+                <input class="form-control" name="address_line" value="{{ site.address_line }}">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">URL embed do mapa</label>
+                <input class="form-control" name="map_embed_url" value="{{ site.map_embed_url }}">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Horário de atendimento</label>
+                <textarea class="form-control" rows="4" name="contact_hours">{{ site.contact_hours }}</textarea>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Texto de introdução do contato</label>
+                <textarea class="form-control" rows="4" name="contact_intro">{{ site.contact_intro }}</textarea>
+            </div>
+
+            <div class="col-12"><hr class="my-0"></div>
+            <div class="col-12">
+                <h2 class="h5 mb-0">Página Sobre</h2>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Título da página Sobre</label>
+                <input class="form-control" name="about_title" value="{{ site.about_title }}">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Chip 1</label>
+                <input class="form-control" name="about_highlight_1" value="{{ site.about_highlight_1 }}">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Chip 2</label>
+                <input class="form-control" name="about_highlight_2" value="{{ site.about_highlight_2 }}">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Chip 3</label>
+                <input class="form-control" name="about_highlight_3" value="{{ site.about_highlight_3 }}">
+            </div>
+            <div class="col-12">
+                <label class="form-label">Texto da página Sobre</label>
+                <textarea class="form-control" rows="7" name="about_text">{{ site.about_text }}</textarea>
+            </div>
+
+            <div class="col-12"><hr class="my-0"></div>
+            <div class="col-12">
+                <h2 class="h5 mb-0">Home</h2>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Kicker do banner</label>
+                <input class="form-control" name="hero_kicker" value="{{ site.hero_kicker }}">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Título de Lançamentos</label>
+                <input class="form-control" name="home_launches_title" value="{{ site.home_launches_title }}">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Título de Categorias</label>
+                <input class="form-control" name="home_categories_title" value="{{ site.home_categories_title }}">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Subtítulo de Lançamentos</label>
+                <textarea class="form-control" rows="3" name="home_launches_subtitle">{{ site.home_launches_subtitle }}</textarea>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Subtítulo de Categorias</label>
+                <textarea class="form-control" rows="3" name="home_categories_subtitle">{{ site.home_categories_subtitle }}</textarea>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Título de Mais vendidos</label>
+                <input class="form-control" name="home_best_sellers_title" value="{{ site.home_best_sellers_title }}">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Subtítulo de Mais vendidos</label>
+                <textarea class="form-control" rows="3" name="home_best_sellers_subtitle">{{ site.home_best_sellers_subtitle }}</textarea>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end">
+                <button class="btn btn-primary-custom">Salvar configurações</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

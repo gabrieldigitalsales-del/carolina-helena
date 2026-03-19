@@ -1,0 +1,31 @@
+<div class="product-card h-100">
+    <div class="product-thumb-wrap">
+        <a href="{{ url_for('product_detail', slug=product.slug) }}" class="product-image-link">
+            <img src="{{ url_for('static', filename=product.image or 'images/product-default.svg') }}" alt="{{ product.name }}" class="product-image">
+        </a>
+        <div class="product-tags">
+            {% if product.is_new %}<span class="product-tag">Lançamento</span>{% endif %}
+            {% if product.is_best_seller %}<span class="product-tag">Mais vendido</span>{% endif %}
+        </div>
+    </div>
+    <div class="product-body">
+        <div class="small text-muted mb-1">{{ product.category.name }}</div>
+        <h3><a href="{{ url_for('product_detail', slug=product.slug) }}">{{ product.name }}</a></h3>
+        {% if product.short_description %}<p class="product-text">{{ product.short_description }}</p>{% endif %}
+        <div class="price-row">
+            {% if product.compare_at_price and product.compare_at_price > product.price %}
+                <span class="compare-price">{{ product.compare_at_price|currency }}</span>
+            {% endif %}
+            <span class="current-price">{{ product.price|currency }}</span>
+        </div>
+        {% if product.available_sizes %}
+        <a href="{{ url_for('product_detail', slug=product.slug) }}" class="btn btn-primary-custom mt-3">Escolher tamanho</a>
+        {% else %}
+        <form method="post" action="{{ url_for('add_to_cart', product_id=product.id) }}" class="mt-3 d-grid gap-2">
+            <input type="hidden" name="quantity" value="1">
+            <input type="hidden" name="next" value="{{ request.full_path if request.query_string else request.path }}">
+            <button class="btn btn-primary-custom">Adicionar ao carrinho</button>
+        </form>
+        {% endif %}
+    </div>
+</div>

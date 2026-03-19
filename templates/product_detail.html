@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}{{ product.name }} | {{ site.store_name }}{% endblock %}
+{% block content %}
+<section class="section-space-sm">
+    <div class="container">
+        <a href="{{ url_for('collection') }}" class="back-link"><i class="bi bi-arrow-left-short"></i> Voltar para coleção</a>
+        <div class="row g-5 align-items-start mt-2">
+            <div class="col-lg-6">
+                <div class="detail-image-wrap">
+                    <img src="{{ url_for('static', filename=product.image or 'images/product-default.svg') }}" alt="{{ product.name }}" class="detail-image">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <span class="section-kicker">{{ product.category.name }}</span>
+                <h1 class="page-title mb-2">{{ product.name }}</h1>
+                <div class="detail-price mb-3">{{ product.price|currency }}</div>
+                {% if product.short_description %}<p class="lead text-muted">{{ product.short_description }}</p>{% endif %}
+                <p class="text-muted">Estoque: {{ product.stock }} unidade(s)</p>
+                <form method="post" action="{{ url_for('add_to_cart', product_id=product.id) }}" class="card p-4 detail-form">
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <div class="detail-buy-grid">
+                        {% if product.available_sizes %}
+                        <div>
+                            <label class="form-label">Tamanho</label>
+                            <select class="form-select" name="size" required>
+                                <option value="">Selecione</option>
+                                {% for size in product.available_sizes %}
+                                <option value="{{ size }}">{{ size }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {% endif %}
+                        <div>
+                            <label class="form-label">Quantidade</label>
+                            <input type="number" class="form-control" name="quantity" min="1" max="{{ product.stock or 1 }}" value="1">
+                        </div>
+                        <div class="detail-actions">
+                            <button class="btn btn-primary-custom">Adicionar ao carrinho</button>
+                            <button type="submit" class="btn btn-outline-dark" name="action" value="checkout">Comprar agora</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="detail-description mt-4">
+                    <h3>Descrição</h3>
+                    <p>{{ product.description }}</p>
+                </div>
+            </div>
+        </div>
+
+        {% if related %}
+        <div class="mt-5 pt-3">
+            <h2 class="related-title text-start">Você também pode gostar</h2>
+            <div class="row g-4 mt-1">
+                {% for product in related %}
+                <div class="col-md-6 col-xl-3">
+                    {% include 'partials/product_card.html' %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

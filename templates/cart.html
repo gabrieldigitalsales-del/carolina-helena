@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}Carrinho | {{ site.store_name }}{% endblock %}
+{% block content %}
+<section class="section-space-sm">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-3">
+            <div>
+                <span class="section-kicker">Carrinho</span>
+                <h1 class="page-title">Seus produtos</h1>
+            </div>
+            <a href="{{ url_for('collection') }}" class="btn btn-outline-dark">Continuar comprando</a>
+        </div>
+        {% if cart['items'] %}
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <form method="post" action="{{ url_for('update_cart') }}">
+                    <div class="vstack gap-3">
+                        {% for item in cart['items'] %}
+                        <div class="cart-line-item">
+                            <img src="{{ url_for('static', filename=item.product.image or 'images/product-default.svg') }}" alt="{{ item.product.name }}">
+                            <div class="flex-grow-1">
+                                <h3>{{ item.product.name }}</h3>
+                                <p class="mb-2 text-muted">{{ item.product.short_description }}</p>
+                                <div class="text-muted">{{ item.product.price|currency }}</div>
+                                {% if item.size %}<div class="small text-muted mt-1">Tamanho: {{ item.size }}</div>{% endif %}
+                            </div>
+                            <div class="cart-actions">
+                                <input type="number" min="0" class="form-control" name="qty_{{ item.cart_key }}" value="{{ item.quantity }}">
+                                <div class="fw-semibold mt-2">{{ item.subtotal|currency }}</div>
+                                <div class="small text-muted mt-2">Para remover, defina a quantidade como 0 e atualize o carrinho.</div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="d-flex justify-content-end mt-3">
+                        <button class="btn btn-outline-dark">Atualizar carrinho</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-4">
+                <div class="summary-card">
+                    <h2 class="h4 mb-4">Resumo</h2>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Subtotal</span>
+                        <span>{{ cart['subtotal']|currency }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between fw-bold mb-4">
+                        <span>Total</span>
+                        <span>{{ cart['subtotal']|currency }}</span>
+                    </div>
+                    <div class="d-grid">
+                        <a href="{{ url_for('checkout') }}" class="btn btn-primary-custom">Ir para checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="empty-block">
+            <h3>Seu carrinho está vazio</h3>
+            <p>Adicione produtos para continuar.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

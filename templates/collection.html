@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}{{ site.store_name }} | Coleção{% endblock %}
+{% block content %}
+<section class="section-space-sm">
+    <div class="container">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-4 mb-4">
+            <div>
+                <span class="section-kicker">Coleção</span>
+                <h1 class="page-title">Produtos da loja</h1>
+                <p class="text-muted mb-0">{{ products|length }} produto(s) encontrado(s).</p>
+            </div>
+            <a href="{{ url_for('contact') }}" class="btn btn-outline-dark">Precisa de atendimento?</a>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3">
+                <div class="filter-card">
+                    <form method="get" class="d-grid gap-3">
+                        <div class="search-box p-0 border-0 shadow-none bg-transparent">
+                            <label class="form-label fw-semibold">Buscar</label>
+                            <input class="form-control" name="q" value="{{ search }}" placeholder="Nome ou descrição">
+                        </div>
+                        <div>
+                            <label class="form-label fw-semibold">Categoria</label>
+                            <select class="form-select" name="categoria">
+                                <option value="">Todas</option>
+                                {% for category in categories %}
+                                <option value="{{ category.slug }}" {% if selected_slug == category.slug %}selected{% endif %}>{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label fw-semibold">Ordenar</label>
+                            <select class="form-select" name="ordem">
+                                <option value="recentes" {% if selected_sort == 'recentes' %}selected{% endif %}>Mais recentes</option>
+                                <option value="preco_menor" {% if selected_sort == 'preco_menor' %}selected{% endif %}>Menor preço</option>
+                                <option value="preco_maior" {% if selected_sort == 'preco_maior' %}selected{% endif %}>Maior preço</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary-custom">Aplicar filtros</button>
+                        <a href="{{ url_for('collection') }}" class="btn btn-outline-dark">Limpar</a>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                {% if products %}
+                <div class="row g-4">
+                    {% for product in products %}
+                    <div class="col-md-6 col-xl-4">
+                        {% include 'partials/product_card.html' %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="empty-block">
+                    <h3>Nenhum produto encontrado</h3>
+                    <p>Ajuste os filtros ou cadastre novos produtos no painel.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

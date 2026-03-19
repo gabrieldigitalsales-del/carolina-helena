@@ -1,0 +1,8 @@
+<svg width="800" height="800" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="800" fill="#F4EDE7"/>
+  <circle cx="310" cy="370" r="90" fill="#D0AA5B"/>
+  <circle cx="490" cy="420" r="90" fill="#8BB8D8"/>
+  <path d="M310 285L335 340L310 455L285 340L310 285Z" fill="#FDFDFD" fill-opacity="0.5"/>
+  <path d="M490 335L515 390L490 505L465 390L490 335Z" fill="#FDFDFD" fill-opacity="0.5"/>
+  <text x="278" y="670" fill="#4D382F" font-family="Georgia, serif" font-size="62">Joias</text>
+</svg>
