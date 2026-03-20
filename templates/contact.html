@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}{{ site.store_name }} | Contato{% endblock %}
+
 {% block content %}
 <section class="section-space-sm">
     <div class="container">
@@ -8,7 +9,9 @@
             <h1 class="page-title">Entre em contato</h1>
             <p class="section-subtitle">{{ site.contact_intro }}</p>
         </div>
-        <div class="row g-4">
+
+        <div class="row g-5 align-items-center justify-content-center">
+            <!-- CARD DE CONTATO -->
             <div class="col-lg-5">
                 <div class="contact-card h-100">
                     <h2 class="h3 mb-4">Fale com a loja</h2>
@@ -17,7 +20,9 @@
                         <div class="contact-grid-icon"><i class="bi bi-whatsapp"></i></div>
                         <div>
                             <div class="fw-semibold">WhatsApp</div>
-                            <a href="{{ store_whatsapp_link }}" target="_blank" rel="noopener">Atendimento direto</a>
+                            <a href="{{ store_whatsapp_link }}" target="_blank" rel="noopener">
+                                Atendimento direto
+                            </a>
                         </div>
                     </div>
 
@@ -25,7 +30,9 @@
                         <div class="contact-grid-icon"><i class="bi bi-instagram"></i></div>
                         <div>
                             <div class="fw-semibold">Instagram</div>
-                            <a href="{{ site.instagram_url }}" target="_blank" rel="noopener">Abrir perfil</a>
+                            <a href="{{ site.instagram_url }}" target="_blank" rel="noopener">
+                                Abrir perfil
+                            </a>
                         </div>
                     </div>
 
@@ -55,9 +62,15 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-7">
-                <div class="map-frame-wrap">
-                    <iframe src="{{ site.map_embed_url }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+
+            <!-- IMAGEM AO LADO -->
+            <div class="col-lg-5">
+                <div class="text-center">
+                    <img
+                        src="{{ url_for('static', filename=site.about_image or 'images/about-cover.svg') }}"
+                        alt="Sobre {{ site.store_name }}"
+                        class="about-image img-fluid rounded-4 shadow-sm"
+                    >
                 </div>
             </div>
         </div>
