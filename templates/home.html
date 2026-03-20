@@ -1,131 +1,147 @@
 {% extends 'base.html' %}
 {% block title %}{{ site.store_name }} | Início{% endblock %}
 {% block content %}
+<section class="hero-section">
+    {% if banners %}
+    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            {% for banner in banners %}
+            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                <div class="hero-banner">
+                    <img
+                        src="{{ url_for('static', filename=banner.image) }}"
+                        alt="{{ banner.title }}"
+                        class="hero-image"
+                    >
+                    <div class="hero-overlay"></div>
 
-<section class="hero-section">  
-    {% if banners %}  
-    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">  
-        <div class="carousel-inner">  
-            {% for banner in banners %}  
-            <div class="carousel-item {% if loop.first %}active{% endif %}">  
-                <div class="hero-banner">  
-                    <img src="{{ url_for('static', filename=banner.image) }}" alt="{{ banner.title }}" class="hero-image">  
-                    <div class="hero-overlay"></div>  
-                    <div class="container hero-content">  
-                        <span class="section-kicker text-white">{{ site.hero_kicker }}</span>  
-                        <h1>{{ banner.title }}</h1>  
-                        <p>{{ banner.subtitle }}</p>  
-                        <div class="d-flex gap-3 flex-wrap mb-4">  
-                            <a href="{{ banner.button_link }}" class="btn btn-primary-custom">{{ banner.button_text }}</a>  
-                            <a href="{{ url_for('about') }}" class="btn btn-soft-custom">Sobre nós</a>  
-                        </div>  
-                     </div>  
-                    </div>  
-                </div>  
-            </div>  
-            {% endfor %}  
-        </div>  
-        {% if banners|length > 1 %}  
-        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">  
-            <span class="carousel-control-prev-icon"></span>  
-        </button>  
-        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">  
-            <span class="carousel-control-next-icon"></span>  
-        </button>  
-        {% endif %}  
-    </div>  
-    {% endif %}  
+                    <div class="container hero-content">
+                        <span class="section-kicker text-white">{{ site.hero_kicker }}</span>
+                        <h1>{{ banner.title }}</h1>
+                        <p>{{ banner.subtitle }}</p>
+
+                        <div class="hero-actions d-flex gap-3 flex-wrap mb-4">
+                            <a href="{{ banner.button_link }}" class="btn btn-primary-custom">{{ banner.button_text }}</a>
+                            <a href="{{ url_for('about') }}" class="btn btn-soft-custom">Sobre nós</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if banners|length > 1 %}
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev" aria-label="Banner anterior">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next" aria-label="Próximo banner">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+        {% endif %}
+    </div>
+    {% endif %}
 </section>
+
 <section class="section-space bg-soft">
     <div class="container">
         <div class="row g-4 mb-5">
-            <div class="col-md-4">
-                <div class="feature-card">
-                    <span class="section-kicker">Digite o texto</span>
-                    <h3>Digite o texto</h3>
-                    <p>Digite o texto </p>
-                </div>
-            </div>
-            <div class="col-md-4">
+            <div class="col-12 col-md-4">
                 <div class="feature-card">
                     <span class="section-kicker">Digite o texto</span>
                     <h3>Digite o texto</h3>
                     <p>Digite o texto</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-12 col-md-4">
                 <div class="feature-card">
                     <span class="section-kicker">Digite o texto</span>
                     <h3>Digite o texto</h3>
-                    <p>Digite o texto</p>  
-                </div>  
-            </div>  
-        </div>  <div class="text-center">  
-        <span class="section-kicker">Exclusividade</span>  
-        <h2 class="section-title">{{ site.home_launches_title }}</h2>  
-        <p class="section-subtitle">{{ site.home_launches_subtitle }}</p>  
-    </div>  
-    <div class="row g-4 mt-4">  
-        {% for product in launches %}  
-        <div class="col-12 col-md-6 col-lg-3">  
-            {% include 'partials/product_card.html' %}  
-        </div>  
-        {% else %}  
-        <div class="col-12">  
-            <div class="empty-block">  
-                <h3>Cadastre seus lançamentos</h3>  
-                <p>Os produtos marcados no painel já aparecem aqui automaticamente.</p>  
-            </div>  
-        </div>  
-        {% endfor %}  
-    </div>  
-</div>
+                    <p>Digite o texto</p>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="feature-card">
+                    <span class="section-kicker">Digite o texto</span>
+                    <h3>Digite o texto</h3>
+                    <p>Digite o texto</p>
+                </div>
+            </div>
+        </div>
 
-</section>  <section class="section-space">  
-    <div class="container text-center">  
-        <span class="section-kicker">Organize sua vitrine</span>  
-        <h2 class="section-title">{{ site.home_categories_title }}</h2>  
-        <p class="section-subtitle">{{ site.home_categories_subtitle }}</p>  
-        <div class="row g-4 mt-4">  
-            {% for category in categories %}  
-            <div class="col-6 col-lg-3">  
-                <a href="{{ url_for('collection', categoria=category.slug) }}" class="category-card">  
-                    <div class="category-thumb">  
-                        <img src="{{ url_for('static', filename=category.image or 'images/category-default.svg') }}" alt="{{ category.name }}">  
-                    </div>  
-                    <h3>{{ category.name }}</h3>  
-                    {% if category.description %}<p>{{ category.description }}</p>{% endif %}  
-                </a>  
-            </div>  
-            {% else %}  
-            <div class="col-12">  
-                <div class="empty-block">  
-                    <h3>Nenhuma categoria cadastrada</h3>  
-                    <p>Crie categorias pelo painel para montar sua vitrine.</p>  
-                </div>  
-            </div>  
-            {% endfor %}  
-        </div>  
-    </div>  
-</section>  <section class="section-space bg-soft-green">  
-    <div class="container text-center">  
-        <span class="section-kicker">Favoritos</span>  
-        <h2 class="section-title">{{ site.home_best_sellers_title }}</h2>  
-        <p class="section-subtitle">{{ site.home_best_sellers_subtitle }}</p>  
-        <div class="row g-4 mt-4">  
-            {% for product in best_sellers %}  
-            <div class="col-12 col-md-6 col-lg-3">  
-                {% include 'partials/product_card.html' %}  
-            </div>  
-            {% else %}  
-            <div class="col-12">  
-                <div class="empty-block">  
-                    <h3>Marque mais vendidos no admin</h3>  
-                    <p>Os produtos sinalizados como mais vendidos aparecem aqui.</p>  
-                </div>  
-            </div>  
-            {% endfor %}  
-        </div>  
-    </div>  
-</section>  
+        <div class="text-center">
+            <span class="section-kicker">Exclusividade</span>
+            <h2 class="section-title">{{ site.home_launches_title }}</h2>
+            <p class="section-subtitle">{{ site.home_launches_subtitle }}</p>
+        </div>
+
+        <div class="row g-4 mt-4">
+            {% for product in launches %}
+            <div class="col-12 col-sm-6 col-lg-3">
+                {% include 'partials/product_card.html' %}
+            </div>
+            {% else %}
+            <div class="col-12">
+                <div class="empty-block">
+                    <h3>Cadastre seus lançamentos</h3>
+                    <p>Os produtos marcados no painel já aparecem aqui automaticamente.</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section-space">
+    <div class="container text-center">
+        <span class="section-kicker">Organize sua vitrine</span>
+        <h2 class="section-title">{{ site.home_categories_title }}</h2>
+        <p class="section-subtitle">{{ site.home_categories_subtitle }}</p>
+
+        <div class="row g-4 mt-4">
+            {% for category in categories %}
+            <div class="col-12 col-sm-6 col-lg-3">
+                <a href="{{ url_for('collection', categoria=category.slug) }}" class="category-card">
+                    <div class="category-thumb">
+                        <img src="{{ url_for('static', filename=category.image or 'images/category-default.svg') }}" alt="{{ category.name }}">
+                    </div>
+                    <h3>{{ category.name }}</h3>
+                    {% if category.description %}
+                    <p>{{ category.description }}</p>
+                    {% endif %}
+                </a>
+            </div>
+            {% else %}
+            <div class="col-12">
+                <div class="empty-block">
+                    <h3>Nenhuma categoria cadastrada</h3>
+                    <p>Crie categorias pelo painel para montar sua vitrine.</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section-space bg-soft-green">
+    <div class="container text-center">
+        <span class="section-kicker">Favoritos</span>
+        <h2 class="section-title">{{ site.home_best_sellers_title }}</h2>
+        <p class="section-subtitle">{{ site.home_best_sellers_subtitle }}</p>
+
+        <div class="row g-4 mt-4">
+            {% for product in best_sellers %}
+            <div class="col-12 col-sm-6 col-lg-3">
+                {% include 'partials/product_card.html' %}
+            </div>
+            {% else %}
+            <div class="col-12">
+                <div class="empty-block">
+                    <h3>Marque mais vendidos no admin</h3>
+                    <p>Os produtos sinalizados como mais vendidos aparecem aqui.</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 {% endblock %}
